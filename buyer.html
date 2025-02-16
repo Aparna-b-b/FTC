@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyers Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('farmerdashboard.jpeg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        header {
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            font-size: 20px;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        header .back-btn {
+            color: white;
+            background-color: #4CAF50;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        main {
+            width: 80%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        td {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        .agri-dealer-section {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+        .agri-dealer-section h3 {
+            color: #193b1e; /* Darkened color for better readability */
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .agri-dealer-section p {
+            text-align: center;
+            font-size: 16px;
+        }
+        .agri-dealer-list {
+            margin-top: 15px;
+            color: white;
+        }
+        .agri-dealer-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .agri-dealer-list th, .agri-dealer-list td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .agri-dealer-list th {
+            background-color: #4CAF50;
+        }
+        .connect-btn {
+            background-color: #2E7D32;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .connect-btn:hover {
+            background-color: #1B5E20;
+            transform: scale(1.05);
+        }
+        .connect-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Buyers Request</h1>
+        <a href="farmerdashboard.html" class="back-btn">Back</a>
+    </header>
+
+    <main>
+        <h2>Customer Requests</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Crop Type</th>
+                    <th>Price (₹/Kg)</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>Rice</td>
+                    <td>30</td>
+                    <td>Delhi</td>
+                    <td><button onclick="contactCustomer('John Doe')">Contact</button></td>
+                </tr>
+                <tr>
+                    <td>Alice Smith</td>
+                    <td>Wheat</td>
+                    <td>40</td>
+                    <td>Lucknow</td>
+                    <td><button onclick="contactCustomer('Alice Smith')">Contact</button></td>
+                </tr>
+                <tr>
+                    <td>Raj Kumar</td>
+                    <td>Maize</td>
+                    <td>25</td>
+                    <td>Chennai</td>
+                    <td><button onclick="contactCustomer('Raj Kumar')">Contact</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <div class="agri-dealer-section">
+        <h3>Agri-Dealer Connection</h3>
+        <p>Connect with an Agri-Dealer to enhance your farming practices, learn new techniques, and improve productivity!</p>
+        
+        <div class="agri-dealer-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Agri-Dealer Name</th>
+                        <th>Location</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Agri Solutions</td>
+                        <td>Pune</td>
+                        <td><button onclick="contactAgriDealer('Agri Solutions')">Connect with Agri-Dealer</button></td>
+                    </tr>
+                    <tr>
+                        <td>GreenTech Agri</td>
+                        <td>Delhi</td>
+                        <td><button onclick="contactAgriDealer('GreenTech Agri')">Connect with Agri-Dealer</button></td>
+                    </tr>
+                    <tr>
+                        <td>FarmCare</td>
+                        <td>Mumbai</td>
+                        <td><button onclick="contactAgriDealer('FarmCare')">Connect with Agri-Dealer</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function contactCustomer(customerName) {
+            alert("Contacting " + customerName + "...");
+            // Implement further actions to contact the customer, e.g., redirect to a messaging form
+        }
+
+        function contactAgriDealer(dealerName) {
+            alert("Connecting you with " + dealerName + "...");
+            // Implement further actions to initiate communication with Agri-Dealer
+        }
+    </script>
+  
+</body>
+</html>

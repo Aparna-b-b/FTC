@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "Poppins", sans-serif;
+            background: url('leaf1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.9;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid green;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            border-color: green;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+        }
+        .message a {
+            color: green;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .register-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" placeholder="Username" required />
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required />
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p class="message">Not registered? <a onclick="toggleForm()">Create an account</a></p>
+            <p class="message"><a href="forgot-password.html">Forgot Password?</a></p>
+        </div>
+        <div class="register-container">
+            <h1>Registration</h1>
+            <form id="registerForm">
+                <div class="input-group">
+                    <input type="text" placeholder="Username" required />
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required />
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required />
+                </div>
+                <button type="submit">Register</button>
+            </form>
+            <p class="message">Already have an account? <a onclick="toggleForm()">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const loginContainer = document.querySelector(".login-container");
+            const registerContainer = document.querySelector(".register-container");
+            loginContainer.style.display = loginContainer.style.display === "none" ? "block" : "none";
+            registerContainer.style.display = registerContainer.style.display === "none" ? "block" : "none";
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            window.location.href = "dashboard.html";
+        });
+
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            toggleForm(); 
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".login-container").style.display = "block";
+            document.querySelector(".register-container").style.display = "none";
+        });
+    </script>
+</body>
+</html>

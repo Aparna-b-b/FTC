@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmers List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('market.jpeg');
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #2a7007;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 18px;
+            color: white;
+            background-color: #319708;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #0d47a1;
+        }
+
+        .search-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .search-box {
+            padding: 12px;
+            font-size: 18px;
+            width: 300px;
+            border: 2px solid #90caf9;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: #0da81d;
+        }
+
+        .farmers-container {
+            width: 85%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .farmer-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 260px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .farmer-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .farmer-card h3 {
+            color: #7fac0d;
+            margin: 0 0 10px;
+        }
+
+        .farmer-card p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .farmer-card:hover .extra-info {
+            display: block;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(25, 118, 210, 0.9);
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .extra-info {
+            display: none;
+        }
+
+        .send-request-button {
+            display: none;
+            background: #1976d2;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .send-request-button:hover {
+            background-color: #0d47a1;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .no-data-message {
+            font-size: 28px;
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #ff5252, #e53935);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            animation: bounceIn 1s ease-in-out;
+            margin-top: 50px;
+            display: none;
+        }
+
+        .selected {
+            border: 2px solid #0d47a1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="dashboard.html" class="back-btn" aria-label="Go back to dashboard">Back</a>
+        <h1>Farmers List</h1>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="crop-search" class="search-box" placeholder="Enter crop type to search..." oninput="filterFarmers()">
+    </div>
+
+    <div class="farmers-container" id="farmers-list">
+        <!-- Farmers cards will be added dynamically here -->
+    </div>
+
+    <div class="no-data-message" id="no-data-message">No farmers found matching the search criteria</div>
+
+    <button class="send-request-button" id="send-request-btn" onclick="sendRequest()" aria-label="Send request to the selected farmer">Send Request to Farmer</button>
+
+    <script>
+        const farmers = [
+    { name: 'vishal', phone: '123456789', location: 'belgam', crop: 'wheat', quantity: 4, price: 20.00, state: 'karnataka', irrigation: 2, landType: 'wetland', image: 'image.jpg' },
+    { name: 'ranga', phone: '987654321', location: 'bijapur', crop: 'rice', quantity: 7, price: 29.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image1.jpg' },
+    { name: 'krishna', phone: '7907110676', location: 'kumbla', crop: 'arecanut', quantity: 5, price: 250.00, state: 'kerala', irrigation: 2, landType: 'wetland', image: 'image2.jpg' },
+    { name: 'prasad', phone: '3456543467', location: 'shivamoga', crop: 'sugarcane', quantity: 5, price: 100.00, state: 'karnataka', irrigation: 1, landType: 'dryland', image: 'image3.jpg' },
+    { name: 'soma', phone: '3452348765', location: 'ujire', crop: 'rice', quantity: 6, price: 54.00, state: 'karnataka', irrigation: 2, landType: 'wetland', image: 'image4.jpg' },
+    { name: 'sanidya', phone: '7654321890', location: 'aldur', crop: 'maize', quantity: 3, price: 53.80, state: 'karnataka', irrigation: 2, landType: 'wetland', image: 'image5.jpg' },
+    { name: 'ranganath', phone: '6578954237', location: 'mulki', crop: 'peanut', quantity: 7, price: 50.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image6.jpg' },
+    { name: 'Lingappa', phone: '8765296356', location: 'bidar', crop: 'corn', quantity: 6, price: 49.00, state: 'karnataka', irrigation: 5, landType: 'dryland', image: 'image7.jpg' },
+    { name: 'Gowramma', phone: '7698263647', location: 'sagara', crop: 'wheat', quantity: 4, price: 38.90, state: 'karnataka', irrigation: 1, landType: 'wetland', image: 'image8.jpg' },
+    { name: 'Timmakka', phone: '36548765986', location: 'tumkur', crop: 'tomato', quantity: 6, price: 41.50, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image9.jpg' },
+    { name: 'Mohan', phone: '8765432109', location: 'mangalore', crop: 'banana', quantity: 3, price: 50.00, state: 'karnataka', irrigation: 4, landType: 'dryland', image: 'image10.jpg' },
+    { name: 'Anjali', phone: '9876512345', location: 'hubli', crop: 'paddy', quantity: 8, price: 55.00, state: 'karnataka', irrigation: 2, landType: 'wetland', image: 'image11.jpg' },
+    { name: 'Karan', phone: '9876123456', location: 'shimoga', crop: 'cotton', quantity: 6, price: 90.00, state: 'karnataka', irrigation: 1, landType: 'dryland', image: 'image12.jpg' },
+    { name: 'Aditi', phone: '7894561230', location: 'udupi', crop: 'tomato', quantity: 7, price: 40.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image13.jpg' },
+    { name: 'Arun', phone: '7894512360', location: 'tumkur', crop: 'potato', quantity: 6, price: 45.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image14.jpg' },
+    { name: 'Nina', phone: '9876543201', location: 'bangalore', crop: 'chili', quantity: 5, price: 35.00, state: 'karnataka', irrigation: 2, landType: 'wetland', image: 'image15.jpg' },
+    { name: 'Vikram', phone: '9876342101', location: 'raichur', crop: 'wheat', quantity: 4, price: 20.00, state: 'karnataka', irrigation: 1, landType: 'dryland', image: 'image16.jpg' },
+    { name: 'Rajesh', phone: '7654321098', location: 'bellary', crop: 'mustard', quantity: 3, price: 30.00, state: 'karnataka', irrigation: 4, landType: 'wetland', image: 'image17.jpg' },
+    { name: 'Sarika', phone: '9876654321', location: 'bijapur', crop: 'jowar', quantity: 5, price: 40.00, state: 'karnataka', irrigation: 3, landType: 'dryland', image: 'image18.jpg' },
+    { name: 'Hemanth', phone: '7907123456', location: 'chitradurga', crop: 'barley', quantity: 6, price: 25.00, state: 'karnataka', irrigation: 1, landType: 'wetland', image: 'image19.jpg' },
+    { name: 'Deepa', phone: '6789123456', location: 'gadag', crop: 'maize', quantity: 5, price: 40.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image20.jpg' },
+    { name: 'Pradeep', phone: '7896543210', location: 'davangere', crop: 'onion', quantity: 4, price: 50.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image21.jpg' },
+    { name: 'Ravi', phone: '9876543210', location: 'hubli', crop: 'garlic', quantity: 7, price: 60.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image22.jpg' },
+    { name: 'Madhavi', phone: '7654312345', location: 'mysore', crop: 'cabbage', quantity: 6, price: 35.00, state: 'karnataka', irrigation: 4, landType: 'wetland', image: 'image23.jpg' },
+    { name: 'Sandeep', phone: '8901234567', location: 'bellary', crop: 'tomato', quantity: 5, price: 60.00, state: 'karnataka', irrigation: 3, landType: 'dryland', image: 'image24.jpg' },
+    { name: 'Sujatha', phone: '9876543213', location: 'raichur', crop: 'brinjal', quantity: 3, price: 30.00, state: 'karnataka', irrigation: 2, landType: 'wetland', image: 'image25.jpg' },
+    { name: 'Kavitha', phone: '7654321869', location: 'bagalkot', crop: 'okra', quantity: 6, price: 38.00, state: 'karnataka', irrigation: 1, landType: 'dryland', image: 'image26.jpg' },
+    { name: 'Ranjith', phone: '6543218765', location: 'hassan', crop: 'pumpkin', quantity: 8, price: 70.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image27.jpg' },
+    { name: 'Manoj', phone: '7635412789', location: 'bijapur', crop: 'spinach', quantity: 6, price: 28.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image28.jpg' },
+    { name: 'Amit', phone: '7894567890', location: 'chikkamagaluru', crop: 'carrot', quantity: 5, price: 32.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image29.jpg' },
+    { name: 'Sumathi', phone: '7459876231', location: 'bagalkot', crop: 'beans', quantity: 4, price: 45.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image30.jpg' },
+    { name: 'Anand', phone: '7623458765', location: 'hubli', crop: 'pulses', quantity: 7, price: 48.00, state: 'karnataka', irrigation: 1, landType: 'wetland', image: 'image31.jpg' },
+    { name: 'Bharathi', phone: '9874563210', location: 'mangalore', crop: 'ghee', quantity: 8, price: 90.00, state: 'karnataka', irrigation: 5, landType: 'dryland', image: 'image32.jpg' },
+    { name: 'Shree', phone: '7612345678', location: 'chitradurga', crop: 'peas', quantity: 5, price: 45.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image33.jpg' },
+    { name: 'Sanjay', phone: '8765432101', location: 'davanagere', crop: 'corn', quantity: 4, price: 50.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image34.jpg' },
+    { name: 'Aravind', phone: '7356987412', location: 'hubli', crop: 'cauliflower', quantity: 6, price: 25.00, state: 'karnataka', irrigation: 1, landType: 'wetland', image: 'image35.jpg' },
+    { name: 'Nikhil', phone: '7897632145', location: 'belgaum', crop: 'chili', quantity: 5, price: 55.00, state: 'karnataka', irrigation: 3, landType: 'dryland', image: 'image36.jpg' },
+    { name: 'Keerthi', phone: '7823654321', location: 'bijapur', crop: 'cabbage', quantity: 4, price: 30.00, state: 'karnataka', irrigation: 1, landType: 'wetland', image: 'image37.jpg' },
+    { name: 'Harish', phone: '7589332789', location: 'shimoga', crop: 'pomegranate', quantity: 5, price: 90.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image38.jpg' },
+    { name: 'Lalitha', phone: '7891234567', location: 'hassan', crop: 'tomato', quantity: 3, price: 40.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image39.jpg' },
+    { name: 'Vijay', phone: '7459687312', location: 'davanagere', crop: 'brinjal', quantity: 6, price: 35.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image40.jpg' },
+    { name: 'Raghav', phone: '7835098765', location: 'chikkamagaluru', crop: 'beans', quantity: 7, price: 45.00, state: 'karnataka', irrigation: 1, landType: 'wetland', image: 'image41.jpg' },
+    { name: 'Siddharth', phone: '7621348795', location: 'mangalore', crop: 'okra', quantity: 8, price: 50.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image42.jpg' },
+    { name: 'Nirmala', phone: '7896541230', location: 'chitradurga', crop: 'carrot', quantity: 5, price: 30.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image43.jpg' },
+    { name: 'Vishnu', phone: '7628975430', location: 'hubli', crop: 'corn', quantity: 6, price: 40.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image44.jpg' },
+    { name: 'Rani', phone: '7823456987', location: 'mangalore', crop: 'pulses', quantity: 3, price: 25.00, state: 'karnataka', irrigation: 4, landType: 'wetland', image: 'image45.jpg' },
+    { name: 'Asha', phone: '7634198765', location: 'shivamoga', crop: 'spinach', quantity: 7, price: 35.00, state: 'karnataka', irrigation: 1, landType: 'dryland', image: 'image46.jpg' },
+    { name: 'Vishal', phone: '7423665789', location: 'belgaum', crop: 'tomato', quantity: 4, price: 40.00, state: 'karnataka', irrigation: 3, landType: 'wetland', image: 'image47.jpg' },
+    { name: 'Prathima', phone: '7894567321', location: 'shrirampur', crop: 'banana', quantity: 5, price: 60.00, state: 'karnataka', irrigation: 2, landType: 'dryland', image: 'image48.jpg' }
+];
+
+
+        const farmersListContainer = document.getElementById('farmers-list');
+        const noDataMessage = document.getElementById('no-data-message');
+        let selectedFarmer = null;
+
+        function renderFarmers(filteredFarmers) {
+            farmersListContainer.innerHTML = '';
+            noDataMessage.style.display = filteredFarmers.length === 0 ? 'block' : 'none';
+
+            filteredFarmers.forEach((farmer, index) => {
+                const card = document.createElement('div');
+                card.classList.add('farmer-card');
+                card.innerHTML = `
+                    <h3>${farmer.name}</h3>
+                    <p>Crop Type: ${farmer.crop}</p>
+                    <p>Land Type: ${farmer.landType}</p>
+                    <p>Max Supply: ${farmer.quantity}</p>
+                    <p>Location: ${farmer.location}</p>
+                    <p>Price: ₹${farmer.price}</p>
+                    <div class="extra-info">Contact Farmer: ${farmer.name}</div>
+                `;
+                card.addEventListener('click', () => selectFarmer(index));
+                farmersListContainer.appendChild(card);
+            });
+        }
+
+        function selectFarmer(index) {
+            if (selectedFarmer !== null) {
+                document.querySelectorAll('.farmer-card')[selectedFarmer].classList.remove('selected');
+            }
+            selectedFarmer = index;
+            document.querySelectorAll('.farmer-card')[index].classList.add('selected');
+            document.getElementById('send-request-btn').style.display = 'block';
+        }
+
+        function filterFarmers() {
+            const searchQuery = document.getElementById('crop-search').value.toLowerCase();
+            const filteredFarmers = farmers.filter(farmer =>
+                farmer.crop.toLowerCase().includes(searchQuery)
+            );
+            renderFarmers(filteredFarmers);
+        }
+
+        function sendRequest() {
+            if (selectedFarmer !== null) {
+                const farmer = farmers[selectedFarmer];
+                alert(`Request sent to ${farmer.name} for ${farmer.crop} crop.`);
+            }
+        }
+
+        // Initialize the farmers list
+        renderFarmers(farmers);
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRILINK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('index.jpeg') no-repeat center center;
+            background-size: cover;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            text-align: center;
+            color: #000;
+        }
+        .title {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #000;
+            text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.9);
+            animation: glow 1.5s infinite alternate;
+            margin-top: -150px;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.8);
+            }
+
+            to {
+                text-shadow: 6px 6px 20px rgba(255, 255, 255, 1);
+            }
+        }
+        .button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #004d00;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .button:hover {
+            background-color: #008000;
+            transform: scale(1.1);
+        }
+        .quote {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            font-style: italic;
+            font-weight: bold;
+            color: #f3f0f0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+        }
+        span {
+            font-size: 3rem;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            color:rgb(16, 08, 29);
+            margin-top: 20px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="title">FTC</div>
+    <span>(Farmer Trader Consumer)</span>
+    <div class="quote">"The farmer is the only man in our economy who buys everything at retail, sells everything at
+        wholesale, and pays the freight both ways."</div>
+    <button class="button" onclick="goToGrow()">Go and Grow</button>
+    <script>
+        function goToGrow() {
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
