@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agri Dealer Dashboard</title>
     <link rel="stylesheet" href="agridealers.css">
+    <script src="agridealers.js"></script>
 </head>
 <body>
     <header>
@@ -51,29 +52,5 @@
         <button id="search-button" style="display: none;" onclick="searchFarmers()">Search</button>
         <button class="back-button" id="back-button" onclick="goBack()" style="display: none;">Back</button>
     </main>
-
-    <script>
-        function toggleFields() {
-            const agroDealingType = document.getElementById('agri-dealing-type').value;
-            document.getElementById('land-type-container').style.display = agroDealingType === 'trading' ? 'block' : 'none';
-            document.getElementById('selling-fields').style.display = agroDealingType === 'selling' ? 'block' : 'none';
-            document.getElementById('search-button').style.display = agroDealingType === 'trading' ? 'block' : 'none';
-            document.getElementById('upload-button').style.display = agroDealingType === 'selling' ? 'block' : 'none';
-            document.getElementById('back-button').style.display = agroDealingType === 'trading' ? 'block' : 'none';
-        }
-
-        function submitForm() {
-            alert("Form submitted successfully!");
-        }
-
-        function searchFarmers() {
-            // Redirect to market.html
-            window.location.href = "market.html";
-        }
-
-        function goBack() {
-            window.location.href = "dashboard.html";
-        }
-    </script>
 </body>
 </html>
