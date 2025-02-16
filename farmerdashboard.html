@@ -5,152 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farmer Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
- 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: url('farmerdashboard.jpeg') no-repeat center center/cover;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            width: 100vw;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        header {
-            background-color: rgba(76, 175, 80, 0.9);
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            width: 100%;
-            font-size: 20px;
-            font-weight: bold;
-            backdrop-filter: blur(5px);
-            position: relative; /* Allows positioning of back button */
-        }
-        .back-btn {
-            position: absolute;
-            left: 20px;
-            top: 15px;
-            color: white;
-            background-color: #4CAF50;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 16px;
-        }
-        .back-btn:hover {
-            background-color: #45a049;
-        }
-        main {
-            width: 60%;
-            max-width: 500px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            margin-top: 15px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-        h2 {
-            color: #4CAF50;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin: 8px 0 5px;
-        }
-        input {
-            width: 100%;
-            padding: 6px; /* Reduced padding */
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            background-color: rgba(101, 21, 21, 0.8);
-            box-sizing: border-box; /* Ensures input width includes padding */
-        }
-        input:focus {
-            border-color: #4CAF50;
-            outline: none;
-            background-color: white;
-        }
-        button {
-            width: 100%;
-            padding: 8px;
-            background: linear-gradient(to right, #4CAF50, #2E7D32);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-            margin-top: 12px;
-        }
-        button:hover {
-            background: linear-gradient(to right, #45a049, #1B5E20);
-            transform: scale(1.05);
-        }
-        button:active {
-            transform: scale(0.98);
-        }
-        .buyer-request {
-            display: flex;
-            align-items: center;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 12px;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-            justify-content: center;
-        }
-        .buyer-request:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .market_analysis {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .market_analysis:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .market_analysis {
-            display: flex;
-            align-items: center;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 12px;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-            justify-content: center;
-        }
-        .bell-icon, .arrow-link {
-            color: #4CAF50;
-            font-size: 22px;
-            margin-left: 8px;
-        }
-        .arrow-link {
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .success-message {
-            color: green;
-            font-weight: bold;
-            margin-top: 15px;
-            text-align: center;
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="farmer.css">
 </head>
 <body>
     <header>
@@ -207,10 +62,10 @@
 
     <script>
         function submitForm() {
-            // Simulate the file upload process
+    
             setTimeout(function() {
-                document.getElementById('successMessage').style.display = 'block'; // Show success message
-            }, 1000); // Simulate upload delay of 1 second
+                document.getElementById('successMessage').style.display = 'block'; 
+            }, 1000); 
         }
     </script>
 </body>
